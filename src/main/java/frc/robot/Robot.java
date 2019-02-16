@@ -54,6 +54,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    SmartDashboard.putNumber("POS", RobotMap.armTurn.getSelectedSensorPosition());
   }
 
   /**
@@ -116,7 +117,6 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
     
-    RobotMap.armTurn.setSelectedSensorPosition(0);
   }
 
   /**

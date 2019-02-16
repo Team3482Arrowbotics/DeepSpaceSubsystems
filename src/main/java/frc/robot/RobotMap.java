@@ -113,6 +113,7 @@ public class RobotMap {
     armTurn.configAllowableClosedloopError(0,0,30);
     int absPos4 = armTurn.getSensorCollection().getPulseWidthPosition();
     absPos4 &= 0xFFF;
+    armTurn.setSelectedSensorPosition(absPos4, 0, 30);
     armTurn.config_kP(0,0.2,30);
     armTurn.config_kI(0,0,30);
     armTurn.config_kD(0,10,30);
