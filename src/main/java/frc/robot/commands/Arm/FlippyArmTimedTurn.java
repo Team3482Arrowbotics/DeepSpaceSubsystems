@@ -18,7 +18,7 @@ import frc.robot.RobotMap;
  */
 public class FlippyArmTimedTurn extends Command {
     static long startTime;
-    static final long MAX_TIME = 1000 * 5;
+    static final long MAX_TIME = 1000 * 4;
     public static final double MAX_POS = 107520;
     static boolean isFinished = false;
   public FlippyArmTimedTurn() {

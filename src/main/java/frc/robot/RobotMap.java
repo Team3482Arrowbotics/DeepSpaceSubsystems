@@ -68,7 +68,7 @@ public class RobotMap {
     //rename talon IDs
     frontLeft = new WPI_TalonSRX(1);
     frontRight = new WPI_TalonSRX(2);
-    backLeft = new WPI_TalonSRX(3);
+    backLeft = new WPI_TalonSRX(13);
     backRight = new WPI_TalonSRX(4);
 
     left = new SpeedControllerGroup(frontLeft, backLeft);
@@ -96,7 +96,7 @@ public class RobotMap {
     climbTalonOne.config_kI(0,0,30);
     climbTalonOne.config_kD(0,0,30);
 
-    climbTalonTwo = new WPI_TalonSRX(8);
+    climbTalonTwo = new WPI_TalonSRX(18);
     climbTalonTwo.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
     climbTalonTwo.configAllowableClosedloopError(0,0,30);
     int absPos3 = climbTalonTwo.getSensorCollection().getPulseWidthPosition();
@@ -108,16 +108,16 @@ public class RobotMap {
     climbBackOne = new DoubleSolenoid(0,1);
     climbBackTwo = new DoubleSolenoid(2,3);
 
-    armTurn = new WPI_TalonSRX(9);
+    armTurn = new WPI_TalonSRX(62);
     armTurn.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
     armTurn.configAllowableClosedloopError(0,0,30);
     int absPos4 = armTurn.getSensorCollection().getPulseWidthPosition();
     absPos4 &= 0xFFF;
-    armTurn.config_kP(0,0.3,30);
+    armTurn.config_kP(0,0.2,30);
     armTurn.config_kI(0,0,30);
     armTurn.config_kD(0,0,30);
 
-    armIntake = new WPI_TalonSRX(10);
+    armIntake = new WPI_TalonSRX(11);
 
     pivotArm = new DoubleSolenoid(4,5);
 

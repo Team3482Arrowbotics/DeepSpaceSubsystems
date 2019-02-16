@@ -5,52 +5,39 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.Arm;
-
-import com.ctre.phoenix.motorcontrol.ControlMode;
+package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
+import frc.robot.subsystems.TZ;
 
 /**
  * An example command.  You can replace me with your own command.
  */
-public class FlippyArmReset extends Command {
-    static long startTime;
-    static final long MAX_TIME = 1000 * 4;
-    static final double RESET_POS = 0;
-    static boolean isFinished = false;
-  public FlippyArmReset() {
+public class TalonZero extends Command {
+    TZ tt;
+  public TalonZero() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.m_subsystem);
+    tt = new TZ();
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-      startTime = System.currentTimeMillis();
+      tt.zero(RobotMap.armIntake);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-      double elapsedTime = System.currentTimeMillis() - startTime;
-      if(elapsedTime < MAX_TIME && !isFinished)
-      {
-          double newPosition = FlippyArmTimedTurn.MAX_POS * (elapsedTime / MAX_TIME);
-          RobotMap.armTurn.set(ControlMode.Position, FlippyArmTimedTurn.MAX_POS - newPosition);
-          System.out.println("New Pos: " + newPosition); //debugging
-      }
-      else{
-          isFinished = true;
-      }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return isFinished;
+    return false;
   }
 
   // Called once after isFinished returns true

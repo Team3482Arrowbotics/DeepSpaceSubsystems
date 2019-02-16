@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.Climber.*;
+import frc.robot.commands.TalonZero;
 import frc.robot.commands.Arm.*;
 import frc.robot.commands.Hatch.*;
 
@@ -63,8 +64,11 @@ public class OI {
     climberPistonUp.whileHeld(new ClimberBackUp());
     climberPistonDown.whileHeld(new ClimberBackDown());
 
-    spintake.whileHeld(new ClawSpintake());
-    spouttake.whileHeld(new ClawSpouttake()); 
+    spintake.whenPressed(new ClawSpintake());
+    spintake.whenReleased(new TalonZero()); 
+
+    spouttake.whenPressed(new ClawSpouttake());
+    spouttake.whenReleased(new TalonZero()); 
     
     wholeArmOut.whileHeld(new FlippyArmTimedTurn());
     wholeArmIn.whileHeld(new FlippyArmReset());
