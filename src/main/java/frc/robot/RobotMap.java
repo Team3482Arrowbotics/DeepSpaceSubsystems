@@ -69,14 +69,14 @@ public class RobotMap {
     frontLeft = new WPI_TalonSRX(1);
     frontRight = new WPI_TalonSRX(2);
     backLeft = new WPI_TalonSRX(13);
-    backRight = new WPI_TalonSRX(4);
+    backRight = new WPI_TalonSRX(14);
 
     left = new SpeedControllerGroup(frontLeft, backLeft);
     right = new SpeedControllerGroup(frontRight, backRight);
 
     drive = new DifferentialDrive(left,right);
     
-    elevatorTalonOne = new WPI_TalonSRX(5);
+    elevatorTalonOne = new WPI_TalonSRX(15);
     elevatorTalonOne.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
     elevatorTalonOne.configAllowableClosedloopError(0,0,30);
     int absPos = elevatorTalonOne.getSensorCollection().getPulseWidthPosition();
@@ -108,7 +108,7 @@ public class RobotMap {
     climbBackOne = new DoubleSolenoid(0,1);
     climbBackTwo = new DoubleSolenoid(2,3);
 
-    armTurn = new WPI_TalonSRX(62);
+    armTurn = new WPI_TalonSRX(5);
     armTurn.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
     armTurn.configAllowableClosedloopError(0,0,30);
     int absPos4 = armTurn.getSensorCollection().getPulseWidthPosition();
@@ -118,11 +118,11 @@ public class RobotMap {
     armTurn.config_kI(0,0,30);
     armTurn.config_kD(0,10,30);
 
-    armIntake = new WPI_TalonSRX(11);
+    armIntake = new WPI_TalonSRX(4);
 
-    pivotArm = new DoubleSolenoid(4,5);
+    pivotArm = new DoubleSolenoid(6,7);
 
-    hatchPiston = new DoubleSolenoid(6,7);
+    hatchPiston = new DoubleSolenoid(4,5);
   }  
   // For example to map the left and right motors, you could define the
   // following variables to use with your drivetrain subsystem.
