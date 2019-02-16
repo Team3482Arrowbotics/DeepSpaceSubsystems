@@ -10,6 +10,7 @@ package frc.robot.commands.Arm;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
@@ -18,9 +19,11 @@ import frc.robot.RobotMap;
  */
 public class FlippyArmTimedTurn extends Command {
     static long startTime;
-    static final long MAX_TIME = 1000 * 4;
-    public static final double MAX_POS = 107520;
+    static final double MAX_TIME = 1000 * 4;
+    public static final double MAX_POS = 107520; //70 degrees for 135:1
     static boolean isFinished = false;
+    static double sPos = RobotMap.armTurn.getSelectedSensorPosition();
+    
   public FlippyArmTimedTurn() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.m_subsystem);
@@ -36,15 +39,14 @@ public class FlippyArmTimedTurn extends Command {
   @Override
   protected void execute() {
       double elapsedTime = System.currentTimeMillis() - startTime;
-      if(elapsedTime < MAX_TIME && !isFinished)
+      if(RobotMap.armTurn.getSelectedSensorPosition() <= MAX_POS)
       {
-          double newPosition = MAX_POS * (elapsedTime / MAX_TIME);
+          double newPosition = RobotMap.armTurn.getSelectedSensorPosition() + 300 *(MAX_POS / MAX_TIME);
+          if (newPosition > MAX_POS)
+            newPosition = MAX_POS;
           RobotMap.armTurn.set(ControlMode.Position, newPosition);
-          System.out.println("New Pos: " + newPosition); //debugging
       }
-      else{
-          isFinished = true;
-      }
+      SmartDashboard.putNumber("New Pos 2: ", (int) RobotMap.armTurn.getSelectedSensorPosition()); //debugging
   }
 
   // Make this return true when this Command no longer needs to run execute()

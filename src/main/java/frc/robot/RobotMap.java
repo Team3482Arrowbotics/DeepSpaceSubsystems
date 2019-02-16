@@ -115,7 +115,7 @@ public class RobotMap {
     absPos4 &= 0xFFF;
     armTurn.config_kP(0,0.2,30);
     armTurn.config_kI(0,0,30);
-    armTurn.config_kD(0,0,30);
+    armTurn.config_kD(0,10,30);
 
     armIntake = new WPI_TalonSRX(11);
 
