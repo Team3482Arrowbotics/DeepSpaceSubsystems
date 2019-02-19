@@ -28,12 +28,12 @@ public class FlippyArm extends Subsystem {
 
   public void intakeIn()
   {
-    RobotMap.armIntake.set(0.4);
+    RobotMap.armIntake.set(0.75);
   }
 
   public void intakeOut()
   {
-    RobotMap.armIntake.set(-0.4);
+    RobotMap.armIntake.set(-0.75);
   }
 
   public void clawIn()

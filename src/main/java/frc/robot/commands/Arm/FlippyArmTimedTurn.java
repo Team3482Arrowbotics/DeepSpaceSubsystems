@@ -20,7 +20,7 @@ import frc.robot.RobotMap;
 public class FlippyArmTimedTurn extends Command {
     static long startTime;
     static final double MAX_TIME = 1000 * 4;
-    public static final double MAX_POS = 107520; //70 degrees for 135:1
+    public static final double MAX_POS = 50000; //70 degrees for 135:1 = 107520
     static boolean isFinished = false;
     static double sPos = RobotMap.armTurn.getSelectedSensorPosition();
     
@@ -41,9 +41,11 @@ public class FlippyArmTimedTurn extends Command {
       double elapsedTime = System.currentTimeMillis() - startTime;
       if(RobotMap.armTurn.getSelectedSensorPosition() <= MAX_POS)
       {
-          double newPosition = RobotMap.armTurn.getSelectedSensorPosition() + 300 *(MAX_POS / MAX_TIME);
+          double newPosition = RobotMap.armTurn.getSelectedSensorPosition() + 300 * (MAX_POS / MAX_TIME);
           if (newPosition > MAX_POS)
+          {
             newPosition = MAX_POS;
+          }
           RobotMap.armTurn.set(ControlMode.Position, newPosition);
       }
       SmartDashboard.putNumber("New Pos 2: ", (int) RobotMap.armTurn.getSelectedSensorPosition()); //debugging

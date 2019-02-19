@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -15,6 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
+import edu.wpi.first.wpilibj.DriverStation;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -30,6 +33,9 @@ public class Robot extends TimedRobot {
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
+  public static boolean isEMovingUp, isEMovingDown;
+
+
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -42,6 +48,9 @@ public class Robot extends TimedRobot {
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
     CameraServer.getInstance().startAutomaticCapture();
+    isEMovingUp = false;
+		isEMovingDown = false;
+    //RobotMap.armTurn.set(ControlMode.Position, RobotMap.armTurn.getSelectedSensorPosition());
   }
 
   /**
@@ -55,6 +64,10 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     SmartDashboard.putNumber("POS", RobotMap.armTurn.getSelectedSensorPosition());
+    double speed = m_oi.logitech.getRawAxis(1);
+		double turnSpeed = m_oi.logitech.getRawAxis(4);
+    RobotMap.drive.arcadeDrive(0.8*turnSpeed, -0.8*speed);
+    SmartDashboard.putNumber("Elev", RobotMap.elevatorTalonOne.getSelectedSensorPosition());
   }
 
   /**
@@ -116,7 +129,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    
+    //RobotMap.elevatorTalonOne.set(0);
   }
 
   /**
@@ -125,6 +138,9 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
+    //RobotMap.armTurn.set(OI.flightStick.getRawAxis(1));
+    //RobotMap.e.teleopRun();
+
   }
 
   /**

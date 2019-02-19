@@ -11,7 +11,9 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import frc.robot.subsystems.Elevator;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Encoder;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -20,6 +22,8 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
  * floating around.
  */
 public class RobotMap {
+
+  public static Elevator e;
 
   /***DRIVE***/
 
@@ -66,63 +70,72 @@ public class RobotMap {
   public static void init()
   {
     //rename talon IDs
-    frontLeft = new WPI_TalonSRX(1);
+    frontLeft = new WPI_TalonSRX(9);
     frontRight = new WPI_TalonSRX(2);
-    backLeft = new WPI_TalonSRX(13);
-    backRight = new WPI_TalonSRX(14);
+    backLeft = new WPI_TalonSRX(10);
+    backRight = new WPI_TalonSRX(1);
 
     left = new SpeedControllerGroup(frontLeft, backLeft);
     right = new SpeedControllerGroup(frontRight, backRight);
 
     drive = new DifferentialDrive(left,right);
     
-    elevatorTalonOne = new WPI_TalonSRX(15);
+    elevatorTalonOne = new WPI_TalonSRX(3); //3
     elevatorTalonOne.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
     elevatorTalonOne.configAllowableClosedloopError(0,0,30);
     int absPos = elevatorTalonOne.getSensorCollection().getPulseWidthPosition();
     absPos &= 0xFFF;
-    elevatorTalonOne.config_kP(0,0.3,30);
+    elevatorTalonOne.setSelectedSensorPosition(absPos, 0, 30);
+    elevatorTalonOne.config_kP(0,0.2,30);
     elevatorTalonOne.config_kI(0,0,30);
-    elevatorTalonOne.config_kD(0,0,30);
+    elevatorTalonOne.config_kD(0,10,30);
+    elevatorTalonOne.setInverted(false);
 
-    elevatorTalonTwo = new WPI_TalonSRX(6);
+    elevatorTalonTwo = new WPI_TalonSRX(8); //8
+    elevatorTalonTwo.setInverted(true);
+    elevatorTalonTwo.follow(elevatorTalonOne); 
 
-    climbTalonOne = new WPI_TalonSRX(7);
+    climbTalonOne = new WPI_TalonSRX(27);
     climbTalonOne.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
     climbTalonOne.configAllowableClosedloopError(0,0,30);
     int absPos2 = climbTalonOne.getSensorCollection().getPulseWidthPosition();
     absPos2 &= 0xFFF;
+    climbTalonOne.setSelectedSensorPosition(absPos2, 0, 30);
     climbTalonOne.config_kP(0,0.3,30);
     climbTalonOne.config_kI(0,0,30);
     climbTalonOne.config_kD(0,0,30);
 
-    climbTalonTwo = new WPI_TalonSRX(18);
+    climbTalonTwo = new WPI_TalonSRX(6);
     climbTalonTwo.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
     climbTalonTwo.configAllowableClosedloopError(0,0,30);
     int absPos3 = climbTalonTwo.getSensorCollection().getPulseWidthPosition();
     absPos3 &= 0xFFF;
+    climbTalonTwo.setSelectedSensorPosition(absPos3, 0, 30);
     climbTalonTwo.config_kP(0,0.3,30);
     climbTalonTwo.config_kI(0,0,30);
     climbTalonTwo.config_kD(0,0,30);
 
-    climbBackOne = new DoubleSolenoid(0,1);
-    climbBackTwo = new DoubleSolenoid(2,3);
+    //climbBackOne = new DoubleSolenoid(0,1);
+    //climbBackTwo = new DoubleSolenoid(2,3);
 
-    armTurn = new WPI_TalonSRX(5);
+    armTurn = new WPI_TalonSRX(5); //5
     armTurn.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
     armTurn.configAllowableClosedloopError(0,0,30);
     int absPos4 = armTurn.getSensorCollection().getPulseWidthPosition();
     absPos4 &= 0xFFF;
     armTurn.setSelectedSensorPosition(absPos4, 0, 30);
-    armTurn.config_kP(0,0.2,30);
+    armTurn.config_kP(0,0.15,30);
     armTurn.config_kI(0,0,30);
     armTurn.config_kD(0,10,30);
+     
 
-    armIntake = new WPI_TalonSRX(4);
+    armIntake = new WPI_TalonSRX(4); //4
 
     pivotArm = new DoubleSolenoid(6,7);
 
     hatchPiston = new DoubleSolenoid(4,5);
+
+    e = new Elevator();
   }  
   // For example to map the left and right motors, you could define the
   // following variables to use with your drivetrain subsystem.

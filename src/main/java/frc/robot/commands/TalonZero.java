@@ -7,6 +7,8 @@
 
 package frc.robot.commands;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
@@ -17,16 +19,18 @@ import frc.robot.subsystems.TZ;
  */
 public class TalonZero extends Command {
     TZ tt;
-  public TalonZero() {
+    WPI_TalonSRX talon;
+  public TalonZero(WPI_TalonSRX tal) {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.m_subsystem);
     tt = new TZ();
+    talon = tal;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-      tt.zero(RobotMap.armIntake);
+      tt.zero(talon);
   }
 
   // Called repeatedly when this Command is scheduled to run

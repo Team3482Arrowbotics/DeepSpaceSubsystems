@@ -19,8 +19,8 @@ import frc.robot.commands.Hatch.*;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-  Joystick logitech;
-  Joystick flightStick;
+  public static Joystick logitech;
+  public static Joystick flightStick;
 
   JoystickButton climbUp; //logitech a
   JoystickButton climbDown; //logitech b
@@ -37,6 +37,8 @@ public class OI {
 
   JoystickButton hatchSet;
   JoystickButton hatchGo;
+
+  public static JoystickButton temp;
 
   public OI()
   {
@@ -59,16 +61,18 @@ public class OI {
     hatchSet = new JoystickButton(flightStick, 11);
     hatchGo = new JoystickButton(flightStick, 12);
 
+    temp = new JoystickButton(flightStick, 10);
+
     climbUp.whileHeld(new ClimberTimedTurn());
     climbDown.whileHeld(new ClimberReset());
     climberPistonUp.whileHeld(new ClimberBackUp());
     climberPistonDown.whileHeld(new ClimberBackDown());
 
     spintake.whenPressed(new ClawSpintake());
-    spintake.whenReleased(new TalonZero()); 
+    spintake.whenReleased(new TalonZero(RobotMap.armIntake)); 
 
     spouttake.whenPressed(new ClawSpouttake());
-    spouttake.whenReleased(new TalonZero()); 
+    spouttake.whenReleased(new TalonZero(RobotMap.armIntake)); 
     
     wholeArmOut.whileHeld(new FlippyArmTimedTurn());
     wholeArmIn.whileHeld(new FlippyArmReset());
@@ -77,6 +81,8 @@ public class OI {
 
     hatchSet.whileHeld(new HatchIn());
     hatchGo.whileHeld(new HatchOut());
+
+    //temp.whileHeld(new TalonZero(RobotMap.elevatorTalonOne));
   }
   //// CREATING BUTTONS
   // One type of button is a joystick button which is any button on a
